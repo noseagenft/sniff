@@ -358,7 +358,6 @@ const StakePage = () => {
                               gridTemplateColumns:
                                 farmerVaultNFTs.length > 1 ? "1fr 1fr" : "1fr",
                               gap: "1.6rem",
-
                               "@media (min-width: 768px)": {
                                 gridTemplateColumns:
                                   farmerVaultNFTs.length > 9
