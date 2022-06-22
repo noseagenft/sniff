@@ -18,6 +18,7 @@ const StakePage = () => {
 
   const {
     walletNFTs,
+    farmAccount,
     farmerAccount,
     farmerVaultAccount,
     farmerStatus,
@@ -95,6 +96,23 @@ const StakePage = () => {
                     margin: "1.6rem 0",
                   }}
                 >
+                  <Flex>
+                    <img
+                      sx={{
+                        maxHeight: "2.4rem",
+                      }}
+                      src="images/nosediamond.png"
+                    />
+                    <Text>
+                      All Noses sniffing: {farmAccount?.gemsStaked.toNumber()}
+                      /456 [
+                      {(
+                        (farmAccount?.gemsStaked.toNumber() / 456) *
+                        100
+                      ).toFixed(2)}
+                      %]
+                    </Text>
+                  </Flex>
                   <Flex
                     sx={{
                       gap: ".4rem",
@@ -109,10 +127,11 @@ const StakePage = () => {
                       src="images/sniff.png"
                     />
                     <Text>
-                      Noses sniffing:&nbsp;
+                      Your Noses sniffing:&nbsp;
                       {farmerAccount?.gemsStaked.toNumber()}
                     </Text>
                   </Flex>
+                  <br />
                   <Text
                     sx={{
                       textAlign: "center",
