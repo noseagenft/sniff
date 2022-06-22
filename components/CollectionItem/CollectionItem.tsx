@@ -1,41 +1,41 @@
 /** @jsxImportSource theme-ui */
-import React, { useRef, useState } from "react"
-import { Button, Flex, Text } from "theme-ui"
+import React, { useRef, useState } from "react";
+import { Button, Flex, Text } from "theme-ui";
 
-import { DotsIcon } from "@/components/icons/"
-import useOutsideClick from "@/hooks/useOutsideClick"
-import { NFT } from "@/hooks/useWalletNFTs"
+import { DotsIcon } from "@/components/icons/";
+import useOutsideClick from "@/hooks/useOutsideClick";
+import { NFT } from "@/hooks/useWalletNFTs";
 
 type Props = {
-  item: NFT
-  additionalOptions?: React.ReactElement
-  onClick?: (item: NFT) => void
-  className?: string
-}
+  item: NFT;
+  additionalOptions?: React.ReactElement;
+  onClick?: (item: NFT) => void;
+  className?: string;
+};
 
 const CollectionItem = (props: Props) => {
-  const { item, additionalOptions = null, className, onClick } = props
-  const [isDropdownActive, setIsDropdownActive] = useState(false)
-  const wrapperRef = useRef(null)
-  useOutsideClick(wrapperRef, () => setIsDropdownActive(false))
+  const { item, additionalOptions = null, className, onClick } = props;
+  const [isDropdownActive, setIsDropdownActive] = useState(false);
+  const wrapperRef = useRef(null);
+  useOutsideClick(wrapperRef, () => setIsDropdownActive(false));
 
   const handleDropdownToggle = () => {
-    setIsDropdownActive((previous) => !previous)
-  }
+    setIsDropdownActive((previous) => !previous);
+  };
 
-  if (!item) return null
+  if (!item) return null;
 
-  const { onchainMetadata, externalMetadata } = item
+  const { onchainMetadata, externalMetadata } = item;
 
-  const handleOnClick = (item: NFT) => () => onClick ? onClick(item) : true
+  const handleOnClick = (item: NFT) => () => onClick ? onClick(item) : true;
   const handleKeyDown =
     (item: NFT) => (e: React.KeyboardEvent<HTMLDivElement>) => {
       if (onClick && e.keyCode == 13) {
-        onClick(item)
+        onClick(item);
       }
 
-      return true
-    }
+      return true;
+    };
 
   return (
     <Flex
@@ -153,7 +153,9 @@ const CollectionItem = (props: Props) => {
           mt: ".8rem",
         }}
       >
-        {externalMetadata.name}
+        {externalMetadata.name.includes("-")
+          ? externalMetadata.name.split("-")[1].trimStart()
+          : externalMetadata.name.replace(" Age NFT", "")}
         {/* <br />
     <a
       href={`https://solscan.io/token/${onchainMetadata.metaData.mint}`}
@@ -164,7 +166,7 @@ const CollectionItem = (props: Props) => {
     </a> */}
       </Text>
     </Flex>
-  )
-}
+  );
+};
 
-export default CollectionItem
+export default CollectionItem;

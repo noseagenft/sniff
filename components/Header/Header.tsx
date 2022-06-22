@@ -1,18 +1,18 @@
 /** @jsxImportSource theme-ui */
-import Link from "next/link"
-import { Button, Container, Flex, Input, Text } from "@theme-ui/components"
+import Link from "next/link";
+import { Button, Container, Flex, Input, Text } from "@theme-ui/components";
 
-import WalletManager from "@/components/WalletManager/WalletManager"
-import { Dispatch, SetStateAction, useState } from "react"
-import { CloseIcon, MenuIcon } from "../icons"
+import WalletManager from "@/components/WalletManager/WalletManager";
+import { Dispatch, SetStateAction, useState } from "react";
+import { CloseIcon, MenuIcon } from "../icons";
 
 type Props = {
-  farmId?: string
-  setFarmId?: Dispatch<SetStateAction<string>>
-}
+  farmId?: string;
+  setFarmId?: Dispatch<SetStateAction<string>>;
+};
 const Header = ({ farmId, setFarmId }: Props) => {
-  const [isMobileMenuActive, setIsMobileMenuActive] = useState(false)
-  const [isChangingFarmId, setIsChangingFarmId] = useState(false)
+  const [isMobileMenuActive, setIsMobileMenuActive] = useState(false);
+  const [isChangingFarmId, setIsChangingFarmId] = useState(false);
 
   return (
     <Flex
@@ -37,19 +37,18 @@ const Header = ({ farmId, setFarmId }: Props) => {
             <Flex as="a" sx={{ alignItems: "center", flexDirection: "column" }}>
               <Flex sx={{ alignItems: "center" }}>
                 <Text as="h1" variant="headingSpecial" ml=".4rem">
-                  GEM
+                  NOSE
                 </Text>
 
                 <img
                   sx={{
                     maxHeight: "4.8rem",
                   }}
-                  src="/images/gemtransparent.gif"
-                  alt="Gemworks"
+                  src="/images/nosediamond.png"
+                  alt="Nose Age"
                 />
-
                 <Text as="h1" variant="headingSpecial" ml=".4rem">
-                  FARM
+                  AGE
                 </Text>
               </Flex>
               {/* <Text
@@ -68,8 +67,8 @@ const Header = ({ farmId, setFarmId }: Props) => {
               marginRight: "auto",
             }}
           >
-            &nbsp;&nbsp;&nbsp;&#8226;&nbsp;
-            {process.env.NEXT_PUBLIC_CONNECTION_NETWORK}
+            &nbsp;&nbsp;&nbsp;&#8226;&nbsp; Noses $SNIFFing for the other body
+            parts
           </Text>
 
           <Flex
@@ -127,7 +126,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
             >
               <CloseIcon />
             </Button>
-            {isChangingFarmId && (
+            {/* {isChangingFarmId && (
               <Input
                 sx={{
                   fontSize: "1.1rem",
@@ -152,7 +151,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
               onClick={() => setIsChangingFarmId((prev) => !prev)}
             >
               (Change Farm ID)
-            </a>
+            </a> */}
 
             <WalletManager />
           </Flex>
@@ -170,7 +169,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
         </Flex>
       </Container>
     </Flex>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

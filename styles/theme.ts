@@ -1,17 +1,17 @@
-import { Theme } from "theme-ui"
+import { Theme } from "theme-ui";
 
-import base from "./preset-base"
-import { reactTabsStyles } from "./react-tabs"
+import base from "./preset-base";
+import { reactTabsStyles } from "./react-tabs";
 
 export const getGradient = (rgb: string) => {
   /**
    * Split RGB. Example: rgb(226, 217, 211)
    * Then extract only numbers
    */
-  const splitted = rgb.split(",").map((raw) => raw.replace(/\D/g, ""))
+  const splitted = rgb.split(",").map((raw) => raw.replace(/\D/g, ""));
 
-  return `linear-gradient(225deg, ${rgb} 0%, rgba(${splitted[0]}, ${splitted[1]}, ${splitted[2]}, 0.7) 50%, rgba(${splitted[0]}, ${splitted[1]}, ${splitted[2]}, 0.5) 100%)`
-}
+  return `linear-gradient(225deg, ${rgb} 0%, rgba(${splitted[0]}, ${splitted[1]}, ${splitted[2]}, 0.7) 50%, rgba(${splitted[0]}, ${splitted[1]}, ${splitted[2]}, 0.5) 100%)`;
+};
 
 /**
  * rgb(84, 42, 147)
@@ -169,7 +169,7 @@ const theme: Theme = {
       lineHeight: "body",
       fontSize: "2.2rem",
       fontFamily:
-        'PressStart2P-Regular, monospace, AvertaStd-Bold, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
+        'LeagueSpartan-Bold, monospace, AvertaStd-Bold, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
       fontWeight: 900,
     },
     heading2: {
@@ -222,10 +222,25 @@ const theme: Theme = {
         fontFamily:
           'AvertaStd-Regular, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
         lineHeight: 1.45,
-        minHeight: "100vh",
         color: "text",
-        backgroundColor: "background",
+        backgroundColor: "rgb(0,0,0)",
+        background:
+          "linear-gradient(45deg, rgba(0,0,0,1) 35%, rgba(0,60,55,1) 50%, rgba(0,0,0,1) 65%)",
+        backgroundSize: "400% 400%",
+        animation: "gradient 22.2s ease infinite",
         transition: "all .125s linear",
+        minHeight: "100vh",
+      },
+      "@keyframes gradient": {
+        "0%": {
+          backgroundPosition: "0% 50%",
+        },
+        "50%": {
+          backgroundPosition: "100% 50%",
+        },
+        "100%": {
+          backgroundPosition: "0% 50%",
+        },
       },
 
       img: {
@@ -277,6 +292,6 @@ const theme: Theme = {
       size: "1.2rem!important",
     },
   },
-}
+};
 
-export default theme
+export default theme;

@@ -1,18 +1,20 @@
 /** @jsxImportSource theme-ui */
-import { Flex, Text, Heading, Spinner, Button, Container } from "theme-ui"
+import { Flex, Text, Heading, Spinner, Button, Container } from "theme-ui";
 
-import CollectionItem from "@/components/CollectionItem/CollectionItem"
-import useGemFarmStaking from "hooks/useGemFarmStaking"
-import { useWallet } from "@solana/wallet-adapter-react"
+import CollectionItem from "@/components/CollectionItem/CollectionItem";
+import useGemFarmStaking from "hooks/useGemFarmStaking";
+import { useWallet } from "@solana/wallet-adapter-react";
 // import { LoadingIcon } from "@/components/icons/LoadingIcon"
 
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs"
-import Header from "@/components/Header/Header"
-import { LoadingIcon } from "@/components/icons/LoadingIcon"
-import { useState } from "react"
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import Header from "@/components/Header/Header";
+import { LoadingIcon } from "@/components/icons/LoadingIcon";
+import { useState } from "react";
 
 const StakePage = () => {
-  const [farmId, setFarmId] = useState(process.env.NEXT_PUBLIC_GEMFARM_ID || "")
+  const [farmId, setFarmId] = useState(
+    process.env.NEXT_PUBLIC_GEMFARM_ID || ""
+  );
 
   const {
     walletNFTs,
@@ -34,9 +36,9 @@ const StakePage = () => {
     handleVaultItemClick,
     handleInitStakingButtonClick,
     handleRefreshRewardsButtonClick,
-  } = useGemFarmStaking(farmId)
+  } = useGemFarmStaking(farmId);
 
-  const { publicKey } = useWallet()
+  const { publicKey } = useWallet();
 
   return (
     <Container>
@@ -50,8 +52,8 @@ const StakePage = () => {
           padding: "0 1.6rem",
         }}
       >
-        <Heading>Your staking account</Heading>
-        <Text>Below you can stake, unstake and collect rewards.</Text>
+        <Heading>Your sniffing station</Heading>
+        <Text>Below you can sniff, unsniff and collect $SNIFFs.</Text>
 
         {!publicKey ? (
           /** Render nothing if there is no wallet connected. */
@@ -70,7 +72,7 @@ const StakePage = () => {
           //     margin: "3.2rem 0"
           //   }}
           // />
-          <Text mt="1.6rem">Farm ID is not configured.</Text>
+          <Text mt="1.6rem">Loading... (Refresh if this takes too long.)</Text>
         ) : /** If there is farmerAccount variable, but no address, it means account isn't initialized */
         farmerAccount && !farmerAccount?.identity ? (
           <Button
@@ -104,10 +106,10 @@ const StakePage = () => {
                       sx={{
                         maxHeight: "2.4rem",
                       }}
-                      src="images/gemtransparent.gif"
+                      src="images/sniff.png"
                     />
                     <Text>
-                      NFTs staked:&nbsp;
+                      Noses sniffing:&nbsp;
                       {farmerAccount?.gemsStaked.toNumber()}
                     </Text>
                   </Flex>
@@ -116,7 +118,7 @@ const StakePage = () => {
                       textAlign: "center",
                     }}
                   >
-                    Vault state: <b>{isLocked ? "locked" : "unlocked"}</b>
+                    Station gate: <b>{isLocked ? "locked" : "unlocked"}</b>
                     <br />
                   </Text>
                   <Text
@@ -124,7 +126,8 @@ const StakePage = () => {
                       textAlign: "center",
                     }}
                   >
-                    Account status: <b>{farmerStatus}</b>
+                    Station status:{" "}
+                    <b>{farmerStatus === "staked" ? "sniffing" : "at rest"}</b>
                     <br />
                   </Text>
                 </Flex>
@@ -149,7 +152,7 @@ const StakePage = () => {
                       !(farmerStatus === "unstaked" && farmerVaultNFTs?.length)
                     }
                   >
-                    Stake
+                    Sniff
                   </Button>
                   <Button
                     onClick={handleUnstakeButtonClick}
@@ -162,19 +165,19 @@ const StakePage = () => {
                   >
                     {farmerStatus === "pendingCooldown"
                       ? "End cooldown"
-                      : "Unstake"}
+                      : "Unsniff"}
                   </Button>
                   <Button
                     onClick={handleClaimButtonClick}
                     disabled={!Number(availableA)}
                   >
-                    Claim{" "}
+                    Collect{" "}
                     <img
                       sx={{
                         margin: "0 .4rem 0 .8rem",
                         maxHeight: "2.4rem",
                       }}
-                      src="images/icon-list-item.png"
+                      src="images/sniff.png"
                     />
                     {availableA ? (
                       <b>{(availableA / 1000000000).toFixed(2)}</b>
@@ -215,7 +218,7 @@ const StakePage = () => {
             >
               <TabList>
                 <Tab>Your wallet</Tab>
-                <Tab>Your vault</Tab>
+                <Tab>Your station</Tab>
               </TabList>
 
               <TabPanel>
@@ -245,32 +248,38 @@ const StakePage = () => {
                           },
                         }}
                       >
-                        {walletNFTs.map((item) => {
-                          const isSelected = selectedWalletItems.find(
-                            (NFT) =>
-                              NFT.onchainMetadata.mint ===
-                              item.onchainMetadata.mint
+                        {walletNFTs
+                          .filter(
+                            (item) =>
+                              item.onchainMetadata.updateAuthority ===
+                              "69wCpE9YzY1AFTJ9a5KZHBsChA3xYNe42MX2YwneRNQX"
                           )
+                          .map((item) => {
+                            const isSelected = selectedWalletItems.find(
+                              (NFT) =>
+                                NFT.onchainMetadata.mint ===
+                                item.onchainMetadata.mint
+                            );
 
-                          return (
-                            <CollectionItem
-                              key={item.onchainMetadata.mint}
-                              item={item}
-                              onClick={
-                                !isLocked ? handleWalletItemClick : () => true
-                              }
-                              sx={{
-                                maxWidth: "16rem",
-                                "> img": {
-                                  border: "3px solid transparent",
-                                  borderColor: isSelected
-                                    ? "primary"
-                                    : "transparent",
-                                },
-                              }}
-                            />
-                          )
-                        })}
+                            return (
+                              <CollectionItem
+                                key={item.onchainMetadata.mint}
+                                item={item}
+                                onClick={
+                                  !isLocked ? handleWalletItemClick : () => true
+                                }
+                                sx={{
+                                  maxWidth: "16rem",
+                                  "> img": {
+                                    border: "3px solid transparent",
+                                    borderColor: isSelected
+                                      ? "white"
+                                      : "transparent",
+                                  },
+                                }}
+                              />
+                            );
+                          })}
                       </div>
                       {walletNFTs.length && !isLocked ? (
                         <Text
@@ -279,7 +288,7 @@ const StakePage = () => {
                           }}
                           variant="small"
                         >
-                          Select NFTs to move them to your Vault.
+                          Select Noses to move them to your Sniffing Station.
                         </Text>
                       ) : null}
                       <Text>
@@ -304,7 +313,7 @@ const StakePage = () => {
                         alignSelf: "stretch",
                       }}
                     >
-                      <Text>There are no NFTs on your wallet.</Text>
+                      <Text>There are no Noses in your wallet.</Text>
                     </Flex>
                   )
                 ) : /** No walletNFTs and public key, means it is loading */
@@ -367,7 +376,7 @@ const StakePage = () => {
                                 (NFT) =>
                                   NFT.onchainMetadata.mint ===
                                   item.onchainMetadata.mint
-                              )
+                              );
 
                               return (
                                 <CollectionItem
@@ -388,7 +397,7 @@ const StakePage = () => {
                                     },
                                   }}
                                 />
-                              )
+                              );
                             })}
                           </div>
                           {farmerVaultNFTs.length && !isLocked ? (
@@ -398,7 +407,7 @@ const StakePage = () => {
                               }}
                               variant="small"
                             >
-                              Select NFTs to withdraw them to your wallet.
+                              Select Noses to withdraw them to your wallet.
                             </Text>
                           ) : null}
 
@@ -424,7 +433,9 @@ const StakePage = () => {
                             alignSelf: "stretch",
                           }}
                         >
-                          <Text>There are no NFTs on your vault.</Text>
+                          <Text>
+                            There are no Noses in your Sniffing Station.
+                          </Text>
                         </Flex>
                       )
                     ) : /** No vaultNFTs and public key, means it is loading */
@@ -446,7 +457,7 @@ const StakePage = () => {
         )}
       </Flex>
     </Container>
-  )
-}
+  );
+};
 
-export default StakePage
+export default StakePage;
