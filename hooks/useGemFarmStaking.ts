@@ -268,7 +268,7 @@ const useGemFarmStaking = (farmId: string) => {
     if (!gemFarmClient || !gemBankClient)
       throw new Error("No Gem Bank client has been initialized.");
 
-    setFeedbackStatus("Staking...");
+    setFeedbackStatus("Sniffing...");
     const { txSig } = await gemFarmClient.stakeWallet(new PublicKey(farmId!));
 
     await connection.confirmTransaction(txSig);

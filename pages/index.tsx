@@ -82,7 +82,7 @@ const StakePage = () => {
             }}
             onClick={handleInitStakingButtonClick}
           >
-            Init staking account
+            Setup sniffing station
           </Button>
         ) : (
           <>
